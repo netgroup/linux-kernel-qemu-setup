@@ -7,4 +7,7 @@ bzImage
 # Ignore all .img files
 *.img
 
+# Ignore pid files
+*.pid
+
 bookworm/
