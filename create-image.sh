@@ -187,6 +187,8 @@ echo 'T0:23:respawn:/sbin/getty -L ttyS0 115200 vt100' | tee -a $DIR/etc/inittab
 printf '\nauto enp0s3\niface enp0s3 inet dhcp\n' | tee -a $DIR/etc/network/interfaces
 echo '/dev/root / ext4 defaults 0 0' | tee -a $DIR/etc/fstab
 echo 'debugfs /sys/kernel/debug debugfs defaults 0 0' | tee -a $DIR/etc/fstab
+mkdir -p $DIR/mnt/shared && \
+	echo 'shared /mnt/shared  9p  trans=virtio,version=9p2000.L  0  0' | tee -a $DIR/etc/fstab
 echo -en "127.0.0.1\tlocalhost\n" | tee $DIR/etc/hosts
 echo "nameserver 8.8.8.8" | tee $DIR/etc/resolv.conf
 echo $VMHOSTNAME | tee $DIR/etc/hostname

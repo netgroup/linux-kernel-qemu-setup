@@ -11,3 +11,4 @@ bzImage
 *.pid
 
 bookworm/
+shared/

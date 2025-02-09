@@ -23,6 +23,7 @@ qemu-system-x86_64 \
         -append "root=/dev/sda rw console=ttyS0 trace_clock=local" \
 	-netdev user,host=10.0.2.10,id=mynet0,hostfwd=tcp::10022-:22 \
 	-device virtio-net-pci,netdev=mynet0 \
+	-virtfs local,path=shared,mount_tag=shared,security_model=mapped-xattr \
         --nographic \
 	-pidfile vm.pid
 
