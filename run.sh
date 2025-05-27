@@ -1,5 +1,7 @@
 #!/bin/bash
 
+readonly KERN_CMDLINE="fips=0"
+
 readonly KERNIMG=bzImage
 readonly ROOTFS=bookworm.img
 
@@ -20,7 +22,7 @@ qemu-system-x86_64 \
 	-m 4G \
         -kernel "${KERNIMG}" \
         -drive file="${ROOTFS}",format=raw \
-        -append "root=/dev/sda rw console=ttyS0 trace_clock=local" \
+        -append "root=/dev/sda rw console=ttyS0 trace_clock=local nokaslr ${KERN_CMDLINE}" \
 	-netdev user,host=10.0.2.10,id=mynet0,hostfwd=tcp::10022-:22 \
 	-device virtio-net-pci,netdev=mynet0 \
 	-virtfs local,path=shared,mount_tag=shared,security_model=mapped-xattr \
