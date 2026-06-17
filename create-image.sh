@@ -162,11 +162,16 @@ fi
 # debian-ports doesn't include non-free, so we exclude firmware-atheros
 if [ $DEBARCH == "riscv64" ]; then
     DEBOOTSTRAP_PARAMS="--keyring /usr/share/keyrings/debian-ports-archive-keyring.gpg --exclude firmware-atheros $DEBOOTSTRAP_PARAMS http://deb.debian.org/debian-ports"
+    MIRROR=""
+else
+    # Allow overriding the Debian mirror via the DEBIAN_MIRROR environment variable.
+    # If not set, debootstrap will use its built-in default (deb.debian.org).
+    MIRROR=${DEBIAN_MIRROR:-}
 fi
 
 # debootstrap may fail for EoL Debian releases
 RET=0
-debootstrap $DEBOOTSTRAP_PARAMS || RET=$?
+debootstrap $DEBOOTSTRAP_PARAMS $MIRROR || RET=$?
 
 if [ $RET != 0 ] && [ $DEBARCH != "riscv64" ]; then
     # Try running debootstrap again using the Debian archive
